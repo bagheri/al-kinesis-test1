@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
 
-  "Description" : "The Amazon Kinesis Data Visualization Sample Application",
+  "Description" : "Alert Logic Amazon Kinesis Test Application",
 
   "Parameters" : {
     "InstanceType" : {
@@ -37,7 +37,7 @@
       "Type" : "String",
       "MinLength" : "7",
       "MaxLength" : "255",
-      "Default" : "https://github.com/awslabs/amazon-kinesis-data-visualization-sample/releases/download/v1.1.1/amazon-kinesis-data-visualization-sample-1.1.1-assembly.zip"
+      "Default" : "https://github.com/bagheri/ALKinesisTest1/releases/download/1.0/alertlogic-amazon-kinesis-tests-1.1.1-assembly.zip"
     }
   },
 
@@ -212,30 +212,30 @@
               }
             },
             "files" : {
-              "/var/kinesis-data-vis-sample-app/watchdog.sh" : {
+              "/var/alertlogic-aws-kinsis-test1/watchdog.sh" : {
                 "content" : {"Fn::Join" : ["", [
                   "#!/bin/bash\n",
-                  "if ! ps aux | grep HttpReferrerCounterApplication | grep -v grep ; then\n",
-                  "    # Launch the Kinesis application for counting HTTP referrer pairs\n",
-                  "    java -cp /var/kinesis-data-vis-sample-app/lib/\\* com.amazonaws.services.kinesis.samples.datavis.HttpReferrerCounterApplication ", { "Ref" : "KCLDynamoDBTable" }, " ", { "Ref" : "KinesisStream" }, " ", { "Ref" : "CountsDynamoDBTable" }, " ", { "Ref" : "AWS::Region" }, " &>> /home/ec2-user/kinesis-data-vis-sample-app-kcl.log &\n",
+                  "if ! ps aux | grep StreamProcessor | grep -v grep ; then\n",
+                  "    # Launch the Kinesis application for alertlogic test1\n",
+                  "    java -cp /var/alertlogic-aws-kinsis-test1/lib/\\* com.alertogic.kinesis.test1.StreamProcessor ", { "Ref" : "KCLDynamoDBTable" }, " ", { "Ref" : "KinesisStream" }, " ", { "Ref" : "CountsDynamoDBTable" }, " ", { "Ref" : "AWS::Region" }, " &>> /home/ec2-user/alertlogic-aws-kinesis-test1.log &\n",
                   "fi\n",
-                  "if ! ps aux | grep HttpReferrerStreamWriter | grep -v grep ; then\n",
+                  "if ! ps aux | grep StreamWriter | grep -v grep ; then\n",
                   "    # Launch our Kinesis stream writer to fill our stream with generated HTTP (resource, referrer) pairs.\n",
                   "    # This will create a writer with 5 threads to send records indefinitely.\n",
-                  "    java -cp /var/kinesis-data-vis-sample-app/lib/\\* com.amazonaws.services.kinesis.samples.datavis.HttpReferrerStreamWriter 5 ",  { "Ref" : "KinesisStream" }, " ", { "Ref" : "AWS::Region" }, " &>> /home/ec2-user/kinesis-data-vis-sample-app-publisher.log &\n",
+                  "    java -cp /var/alertlogic-aws-kinsis-test1/lib/\\* com.alertlogic.kinesis.test1.StreamWriter 5 ",  { "Ref" : "KinesisStream" }, " ", { "Ref" : "AWS::Region" }, " &>> /home/ec2-user/alertlogic-aws-kinesis-test1-publisher.log &\n",
                   "fi\n",
                   "if ! ps aux | grep WebServer | grep -v grep ; then\n",
                   "    # Launch the webserver\n",
-                  "    java -cp /var/kinesis-data-vis-sample-app/lib/\\* com.amazonaws.services.kinesis.samples.datavis.WebServer 80 /var/kinesis-data-vis-sample-app/wwwroot ", { "Ref" : "CountsDynamoDBTable" }, " ", { "Ref" : "AWS::Region" }, " &>> /home/ec2-user/kinesis-data-vis-sample-app-www.log &\n",
+                  "    java -cp /var/alertlogic-aws-kinsis-test1/lib/\\* com.alertlogic.kinesis.test1.WebServer 80 /var/alertlogic-aws-kinesis-test1/wwwroot ", { "Ref" : "CountsDynamoDBTable" }, " ", { "Ref" : "AWS::Region" }, " &>> /home/ec2-user/alertlogic-aws-kinsis-test1-www.log &\n",
                   "fi\n"
                 ]]},
                 "mode" : "000755",
                 "owner" : "ec2-user",
                 "group" : "ec2-user"
               },
-              "/var/kinesis-data-vis-sample-app/crontask" : {
+              "/var/alertlogic-aws-kinesis-test1/crontask" : {
                 "content" : {"Fn::Join" : ["", [
-                  "* * * * * bash /var/kinesis-data-vis-sample-app/watchdog.sh\n"
+                  "* * * * * bash /var/alertlogic-aws-kinsis-test1/watchdog.sh\n"
                 ]]},
                 "mode" : "000644",
                 "owner" : "ec2-user",
@@ -243,7 +243,7 @@
               }
             },
             "sources": {
-              "/var/kinesis-data-vis-sample-app" : { "Ref" : "ApplicationArchive" }
+              "/var/alertlogic-aws-kinesis-test1" : { "Ref" : "ApplicationArchive" }
             }
           }
         }
@@ -265,10 +265,10 @@
           "         --region ", { "Ref" : "AWS::Region" }, "\n",
 
           "# Register watchdog script with cron\n",
-          "crontab /var/kinesis-data-vis-sample-app/crontask\n",
+          "crontab /var/alertlogic-aws-kinesis-test1/crontask\n",
 
           "# Launch watchdog script immediately so if it fails this stack fails to start\n",
-          "/var/kinesis-data-vis-sample-app/watchdog.sh\n",
+          "/var/alertlogic-aws-kinesis-test1/watchdog.sh\n",
 
           "/opt/aws/bin/cfn-signal -e $? '", { "Ref" : "WaitHandle" }, "'\n"
         ]]}}

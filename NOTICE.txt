@@ -1,0 +1,2 @@
+ALKinesisTest1
+Copyright 2014 Amazon.com, Inc. Alert Logic Inc. All Rights Reserved.
