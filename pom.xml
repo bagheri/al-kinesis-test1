@@ -1,17 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.amazonaws.services.kinesis</groupId>
-    <artifactId>alertlogic-amazon-kinesis-tests</artifactId>
+    <groupId>com.alertlogic.aws.kinesis</groupId>
+    <artifactId>alertlogic-aws-kinesis-test1</artifactId>
     <packaging>jar</packaging>
-    <name>Alert Logic Amazon Kinesis Tests</name>
-    <version>1.1.1</version>
-    <description>Alert Logic Amazon Kinesis test applications.
+    <name>Alert Logic Amazon Kinesis Test1</name>
+    <version>1.0.0</version>
+    <description>Alert Logic Amazon Kinesis test application.
     </description>
-    <url>https://github.com/bagheri/amazon-kinesis-tests/wiki</url>
+    <url>https://github.com/bagheri/al-kinesis-test1/wiki</url>
 
     <scm>
-        <url>https://github.com/bagheri/amazon-kinesis-tests.git
+        <url>https://github.com/bagheri/al-kinesis-test1.git
         </url>
     </scm>
 
@@ -24,9 +24,9 @@
     </licenses>
 
     <properties>
-        <test-application.name>AmazonKinesisTests-Test1StreamProcessor</test-application.name>
-        <test-application.stream>AmazonKinesisTests-Tests1Stream</test-application.stream>
-        <test-application.model-table>AmazonKinesisTests-Test1-Models</test-application.model-table>
+        <test-application.name>AmazonKinesisTest1-StreamProcessor</test-application.name>
+        <test-application.stream>AmazonKinesisTest1-StreamWriter</test-application.stream>
+        <test-application.counts-table>AmazonKinesisTest1-HttpReferrerPairsCounter-Counts</test-application.counts-table>
         <test-application.region>us-east-1</test-application.region>
 
         <amazon-kinesis-client.version>1.1.0</amazon-kinesis-client.version>
@@ -106,6 +106,14 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <version>2.17</version>
+              <configuration>
+                <skipTests>${skipTests}</skipTests>
+              </configuration>
+            </plugin>
         </plugins>
     </build>
     <profiles>
@@ -119,7 +127,7 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <version>1.2.1</version>
                         <configuration>
-                            <mainClass>com.amazonaws.services.kinesis.samples.datavis.HttpReferrerCounterApplication</mainClass>
+                            <mainClass>com.alertlogic.aws.kinesis.test1.StreamProcessor</mainClass>
                             <arguments>
                                 <argument>${sample-application.name}</argument>
                                 <argument>${sample-application.stream}</argument>
@@ -141,7 +149,7 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <version>1.2.1</version>
                         <configuration>
-                            <mainClass>com.amazonaws.services.kinesis.samples.datavis.HttpReferrerStreamWriter</mainClass>
+                            <mainClass>com.alertlogic.aws.kinesis.test1.StreamWriter</mainClass>
                             <arguments>
                                 <!-- Start a single thread to put records in to Amazon Kinesis -->
                                 <argument>1</argument>
@@ -163,7 +171,7 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <version>1.2.1</version>
                         <configuration>
-                            <mainClass>com.amazonaws.services.kinesis.samples.datavis.WebServer</mainClass>
+                            <mainClass>com.alertlogic.aws.kinesis.test1.WebServer</mainClass>
                             <arguments>
                                 <!-- Start Jetty on port 8080 -->
                                 <argument>8080</argument>
@@ -187,7 +195,7 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <version>1.2.1</version>
                         <configuration>
-                            <mainClass>com.amazonaws.services.kinesis.samples.datavis.utils.DeleteSampleResources</mainClass>
+                            <mainClass>com.alertlogic.aws.kinesis.test1.utils.DeleteSampleResources</mainClass>
                             <arguments>
                               <argument>${sample-application.name}</argument>
                               <argument>${sample-application.stream}</argument>

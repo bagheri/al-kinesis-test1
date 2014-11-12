@@ -37,7 +37,7 @@
       "Type" : "String",
       "MinLength" : "7",
       "MaxLength" : "255",
-      "Default" : "https://github.com/bagheri/ALKinesisTest1/releases/download/1.0/alertlogic-amazon-kinesis-tests-1.1.1-assembly.zip"
+      "Default" : "https://github.com/bagheri/al-kinesis-test1/releases/download/1.0/alertlogic-aws-kinesis-test1-1.0.0-assembly.zip"
     }
   },
 
